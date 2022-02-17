@@ -1,6 +1,4 @@
-Running CLASSLA
-Getting started
-To run the CLASSLA pipeline for the first time on processing standard Slovenian, follow these steps:
+##Runing Classla
 
 >>> import classla
 >>> classla.download('sl')                            # download standard models for Slovenian, use hr for Croatian, sr for Serbian, bg for Bulgarian, mk for Macedonian
@@ -17,4 +15,3 @@ To run the CLASSLA pipeline for the first time on processing standard Slovenian,
 5	v	v	ADP	Sl	Case=Loc	6	case	_	NER=O
 6	Vrbi	Vrba	PROPN	Npfsl	Case=Loc|Gender=Fem|Number=Sing	4	obl	_	NER=B-LOC|SpaceAfter=No
 7	.	.	PUNCT	Z	_	4	punct	_	NER=O
-
