@@ -1,84 +1,16 @@
 
-# A [CLASSLA](http://www.clarin.si/info/k-centre/) Fork of [Stanza](https://github.com/stanfordnlp/stanza) for Processing Slovenian, Croatian, Serbian, Macedonian and Bulgarian
+# Classla Support for Serbian - - Algolia   
 
 ## Description
 
-This pipeline allows for processing of standard Slovenian, Croatian, Serbian and Bulgarian on the levels of
+# Runing Classla $
+ - Install brew using # pip install brew #
+ - Install cyrtranslit using # pip install cyrtranslit #
+ - Set up your virtual env # py -m pip install --user virtualenv # **.\env\Scripts\activate
+ - Install csv writer # **** pip install csvwriter
 
-- tokenization and sentence splitting
-- part-of-speech tagging
-- lemmatization
-- dependency parsing
-- named entity recognition
 
-It also allows for (alpha) processing of standard Macedonian on the levels of 
-
-- tokenization and sentence splitting
-- part-of-speech tagging
-- lemmatization
-
-Finally, it allows for processing of non-standard (Internet) Slovenian, Croatian and Serbian on the same levels as standard language (all models are tailored to non-standard language except for dependency parsing where the standard module is used).
-
-## Differences to Stanza
-
-The differences of this pipeline to the original Stanza pipeline are the following:
-
-- usage of language-specific rule-based tokenizers and sentence splitters, [obeliks](https://pypi.org/project/obeliks/) for standard Slovenian and [reldi-tokeniser](https://pypi.org/project/reldi-tokeniser/) for the remaining varieties and languages (Stanza uses inferior machine-learning-based tokenization and sentence splitting trained on UD data)
-- default pre-tagging and pre-lemmatization on the level of tokenizers for the following phenomena: punctuation, symbol, e-mail, URL, mention, hashtag, emoticon, emoji (usage documented [here](https://github.com/clarinsi/classla/blob/master/README.superuser.md#usage-of-tagging-control-via-the-tokenizer))
-- optional control of the tagger for Slovenian via an inflectional lexicon on the levels of XPOS, UPOS, FEATS (usage documented [here](https://github.com/clarinsi/classla/blob/master/README.superuser.md#usage-of-inflectional-lexicon))
-- closed class handling depending on the usage of the options described in the last two bullets, as documented [here](https://github.com/clarinsi/classla/blob/master/README.closed_classes.md)
-- usage of external inflectional lexicons for lookup lemmatization, seq2seq being used very infrequently on OOVs only (Stanza uses only UD training data for lookup lemmatization)
-- morphosyntactic tagging models based on larger quantities of training data than is available in UD (training data that are morphosyntactically tagged, but not UD-parsed)
-- lemmatization models based on larger quantities of training data than is available in UD (training data that are lemmatized, but not UD-parsed)
-- optional JOS-project-based parsing of Slovenian (usage documented [here](https://github.com/clarinsi/classla/blob/master/README.superuser.md#jos-dependency-parsing-system))
-- named entity recognition models for all languages except Macedonian (Stanza does not cover named entity recognition for any of the languages supported by classla)
-- Macedonian models (Macedonian is not available in UD yet)
-- non-standard models for Croatian, Slovenian, Serbian (there is no UD data for these varieties)
-
-The above modifications led to some important improvements in the tool’s performance in comparison to original Stanza. For standard Slovenian, for example, running the full classla pipeline increases sentence segmentation F1 scores to 99.52 (94.29% error reduction), lemmatization to 99.17 (68.8% error reduction), XPOS tagging  to 97.38 (46.75% error reduction), UPOS tagging to 98.69 (23.4% error reduction), and LAS to 92.05 (23.56% error reduction).  See official [Stanza performance](https://stanfordnlp.github.io/stanza/performance.html) (evaluated on different data splits) for comparison.
-
-## Installation
-### pip
-We recommend that you install CLASSLA via pip, the Python package manager. To install, run:
-```bash
-pip install classla
-```
-This will also resolve all dependencies.
-
-__NOTE TO EXISTING USERS__: Once you install this classla version, you will HAVE TO re-download the models. All previously downloaded models will not be used anymore. We suggest you delete the old models. Their default location is at `~/classla_resources`.
-
-## Running CLASSLA
-
-### Getting started
-
-To run the CLASSLA pipeline for the first time on processing standard Slovenian, follow these steps:
-
-```
->>> import classla
->>> classla.download('sl')                            # download standard models for Slovenian, use hr for Croatian, sr for Serbian, bg for Bulgarian, mk for Macedonian
->>> nlp = classla.Pipeline('sl')                      # initialize the default Slovenian pipeline, use hr for Croatian, sr for Serbian, bg for Bulgarian, mk for Macedonian
->>> doc = nlp("France Prešeren je rojen v Vrbi.")     # run the pipeline
->>> print(doc.to_conll())                             # print the output in CoNLL-U format
-# newpar id = 1
-# sent_id = 1.1
-# text = France Prešeren je rojen v Vrbi.
-1	France	France	PROPN	Npmsn	Case=Nom|Gender=Masc|Number=Sing	4	nsubj	_	NER=B-PER
-2	Prešeren	Prešeren	PROPN	Npmsn	Case=Nom|Gender=Masc|Number=Sing	1	flat_name	_	NER=I-PER
-3	je	biti	AUX	Va-r3s-n	Mood=Ind|Number=Sing|Person=3|Polarity=Pos|Tense=Pres|VerbForm=Fin	4	cop	_	NER=O
-4	rojen	rojen	ADJ	Appmsnn	Case=Nom|Definite=Ind|Degree=Pos|Gender=Masc|Number=Sing|VerbForm=Part	0	root	_	NER=O
-5	v	v	ADP	Sl	Case=Loc	6	case	_	NER=O
-6	Vrbi	Vrba	PROPN	Npfsl	Case=Loc|Gender=Fem|Number=Sing	4	obl	_	NER=B-LOC|SpaceAfter=No
-7	.	.	PUNCT	Z	_	4	punct	_	NER=O
-
-```
-You can find examples of standard language processing for [Croatian](#example-of-standard-croatian), [Serbian](#example-of-standard-serbian), [Macedonian](#example-of-standard-macedonian) and [Bulgarian](#example-of-standard-bulgarian) at the end of this document.
-
-### Processing non-standard language
-
-Processing non-standard Slovenian differs to the above standard example just by an additional argument ```type="nonstandard"```:
-
-```
->>> import classla
+##***>>> import classla
 >>> classla.download('sl', type='nonstandard')        # download non-standard models for Slovenian, use hr for Croatian and sr for Serbian
 >>> nlp = classla.Pipeline('sl', type='nonstandard')  # initialize the default non-standard Slovenian pipeline, use hr for Croatian and sr for Serbian
 >>> doc = nlp("kva smo mi zurali zadnje leto v zagrebu...")     # run the pipeline
@@ -93,27 +25,13 @@ Processing non-standard Slovenian differs to the above standard example just by 
 8	zagrebu	Zagreb	PROPN	Npmsl	Case=Loc|Gender=Masc|Number=Sing	4	obl	NER=B-LOC|SpaceAfter=No
 9	...	.	PUNCT	Z	_	4	punct	_	NER=O
 
-```
 
-You can find examples of non-standard language processing for [Croatian](#example-of-non-standard-croatian) and [Serbian](#example-of-non-standard-serbian)  at the end of this document.
-
-For additional usage examples you can also consult the ```pipeline_demo.py``` file.
-
-## Processors
-
-The CLASSLA pipeline is built from multiple units. These units are called processors. By default CLASSLA runs the ```tokenize```, ```ner```, ```pos```, ```lemma``` and ```depparse``` processors.
-
-You can specify which processors CLASSLA should run, via the ```processors``` attribute as in the following example, performing tokenization, named entity recognition, part-of-speech tagging and lemmatization.
-
-```python
->>> nlp = classla.Pipeline('sl', processors='tokenize,ner,pos,lemma')
-```
 
 Another popular option might be to perform tokenization, part-of-speech tagging, lemmatization and dependency parsing.
 
-```python
+python
 >>> nlp = classla.Pipeline('sl', processors='tokenize,pos,lemma,depparse')
-```
+
 
 ### Tokenization and sentence splitting
 
@@ -130,46 +48,7 @@ tokenize_pretokenized   - [boolean]     ignores tokenizer
 
 ### Part-of-speech tagging
 
-The POS tagging processor ```pos``` will general output that contains morphosyntactic description following the [MULTEXT-East standard](http://nl.ijs.si/ME/V6/msd/html/msd.lang-specific.html) and universal part-of-speech tags and universal features following the [Universal Dependencies standard](https://universaldependencies.org). This processing requires the usage of the ```tokenize``` processor.
-
-<!--Most important attributes:
-```
-pos_model_path          - [str]         alternative path to model file
-pos_pretrain_path       - [str]         alternative path to pretrain file
-```-->
-
-### Lemmatization
-
-The lemmatization processor ```lemma``` will produce lemmas (basic forms) for each token in the input. It requires the usage of both the ```tokenize``` and ```pos``` processors.
-
-### Dependency parsing
-
-The dependency parsing processor ```depparse``` performs syntactic dependency parsing of sentences following the [Universal Dependencies formalism](https://universaldependencies.org/introduction.html#:~:text=Universal%20Dependencies%20(UD)%20is%20a,from%20a%20language%20typology%20perspective.). It requires the ```tokenize``` and ```pos``` processors.
-
-### Named entity recognition
-
-The named entity recognition processor ```ner``` identifies named entities in text following the [IOB2](https://en.wikipedia.org/wiki/Inside–outside–beginning_(tagging)) format. It requires only the ```tokenize``` processor.
-
-## Citing
-
-If you use this tool, please cite the following paper:
-
-```
-@inproceedings{ljubesic-dobrovoljc-2019-neural,
-    title = "What does Neural Bring? Analysing Improvements in Morphosyntactic Annotation and Lemmatisation of {S}lovenian, {C}roatian and {S}erbian",
-    author = "Ljube{\v{s}}i{\'c}, Nikola  and
-      Dobrovoljc, Kaja",
-    booktitle = "Proceedings of the 7th Workshop on Balto-Slavic Natural Language Processing",
-    month = aug,
-    year = "2019",
-    address = "Florence, Italy",
-    publisher = "Association for Computational Linguistics",
-    url = "https://www.aclweb.org/anthology/W19-3704",
-    doi = "10.18653/v1/W19-3704",
-    pages = "29--34"
-    }
-```
-
+The POS tagging processor ```pos``` will general output that contains morphosyntactic description following the [MULTEXT-East standard](http://nl.ijs.si/ME/V6/msd/html/msd.lang-specific.html) and universal part-of-speech tags and universal features following the [Universal Dependencies standard]
 ## Croatian examples
 
 ### Example of standard Croatian 
@@ -305,12 +184,4 @@ If you use this tool, please cite the following paper:
 7	Постол	постол	NOUN	Ncmsnn	Case=Nom|Definite=Ind|Gender=Masc|Number=Sing	_	_	_	SpaceAfter=No
 8	.	.	PUNCT	Z	_	_	_	_	_
 
-```
 
-## Training instructions
-
-[Training instructions](https://github.com/clarinsi/classla-stanfordnlp/blob/main/README.train.md)
-
-## Superuser instructions
-
-[Superuser instructions](https://github.com/clarinsi/classla-stanfordnlp/blob/main/README.superuser.md)
