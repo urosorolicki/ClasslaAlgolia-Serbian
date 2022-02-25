@@ -4,11 +4,15 @@
 ## Description
 
 # Runing Classla $
+ -pip install classla , pip3 install classla, brew install classla
+ 
  - Install brew using  pip install brew 
  - Install cyrtranslit using -- pip install cyrtranslit 
   
+  
  - Set up your virtual env -- py -m pip install --user virtualenv 
  - \env\Scripts\activate
+ 
  
  - Install csv writer -- pip install csvwriter
 
